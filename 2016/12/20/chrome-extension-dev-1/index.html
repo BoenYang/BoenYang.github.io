@@ -1,0 +1,639 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="en">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css">
+
+
+  <meta name="keywords" content="Hexo, NexT">
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.0">
+
+
+
+
+
+
+<meta name="description" content="最近喜欢上了使用RSS订阅工具来订阅自己经常阅读的一些博客和网站，因此在Chrome插件商店找到了一款RSSFeed的插件，用起来还不错，但是免费版本不支持RSS订阅的云同步，而且需要注册RSSFeed的账号才可以进行云同步，索性学习一下Chrome插件开发玩玩，顺便练习一下一直不太熟练的JS。 环境搭建Chrome插件的开发环境搭建非常的简单，可以说不需要什么开发环境，所以你只需要下面几样东西就">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Chrome插件开发-开发环境搭建">
+<meta property="og:url" content="http://yoursite.com/2016/12/20/chrome-extension-dev-1/index.html">
+<meta property="og:site_name" content="BoenYang">
+<meta property="og:description" content="最近喜欢上了使用RSS订阅工具来订阅自己经常阅读的一些博客和网站，因此在Chrome插件商店找到了一款RSSFeed的插件，用起来还不错，但是免费版本不支持RSS订阅的云同步，而且需要注册RSSFeed的账号才可以进行云同步，索性学习一下Chrome插件开发玩玩，顺便练习一下一直不太熟练的JS。 环境搭建Chrome插件的开发环境搭建非常的简单，可以说不需要什么开发环境，所以你只需要下面几样东西就">
+<meta property="og:locale" content="en">
+<meta property="og:image" content="http://ww3.sinaimg.cn/large/b3ee9d59gw1f5kkcfef1hj20kq02rt8x.jpg">
+<meta property="og:image" content="http://ww1.sinaimg.cn/large/b3ee9d59gw1f5kkd2nuv5j20kn0523z3.jpg">
+<meta property="og:image" content="http://ww4.sinaimg.cn/large/b3ee9d59gw1f5kkd8oo34j202z01gglf.jpg">
+<meta property="og:updated_time" content="2019-09-23T06:47:53.734Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Chrome插件开发-开发环境搭建">
+<meta name="twitter:description" content="最近喜欢上了使用RSS订阅工具来订阅自己经常阅读的一些博客和网站，因此在Chrome插件商店找到了一款RSSFeed的插件，用起来还不错，但是免费版本不支持RSS订阅的云同步，而且需要注册RSSFeed的账号才可以进行云同步，索性学习一下Chrome插件开发玩玩，顺便练习一下一直不太熟练的JS。 环境搭建Chrome插件的开发环境搭建非常的简单，可以说不需要什么开发环境，所以你只需要下面几样东西就">
+<meta name="twitter:image" content="http://ww3.sinaimg.cn/large/b3ee9d59gw1f5kkcfef1hj20kq02rt8x.jpg">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2016/12/20/chrome-extension-dev-1/">
+
+
+
+
+
+  <title> Chrome插件开发-开发环境搭建 | BoenYang </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="en">
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">BoenYang</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+    
+      <p class="site-subtitle">BoenYang's Blog</p>
+    
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            Archives
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            Tags
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+  <link itemprop="mainEntityOfPage" href="http://yoursite.com/2016/12/20/chrome-extension-dev-1/">
+
+  <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <meta itemprop="name" content="BoenYang">
+    <meta itemprop="description" content>
+    <meta itemprop="image" content="/images/avatar.gif">
+  </span>
+
+  <span style="display:none" itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+    <meta itemprop="name" content="BoenYang">
+    <span style="display:none" itemprop="logo" itemscope itemtype="http://schema.org/ImageObject">
+      <img style="display:none;" itemprop="url image" alt="BoenYang" src>
+    </span>
+  </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                Chrome插件开发-开发环境搭建
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2016-12-20T21:39:36+00:00">
+                2016-12-20
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+
+          
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>最近喜欢上了使用RSS订阅工具来订阅自己经常阅读的一些博客和网站，因此在Chrome插件商店找到了一款RSSFeed的插件，用起来还不错，但是免费版本不支持RSS订阅的云同步，而且需要注册RSSFeed的账号才可以进行云同步，索性学习一下Chrome插件开发玩玩，顺便练习一下一直不太熟练的JS。</p>
+<h2 id="环境搭建"><a href="#环境搭建" class="headerlink" title="环境搭建"></a>环境搭建</h2><p>Chrome插件的开发环境搭建非常的简单，可以说不需要什么开发环境，所以你只需要下面几样东西就可以开始开发Chrome插件了  </p>
+<ol>
+<li>一个支持代码高亮的文本编辑器，VSCode,Sublime等</li>
+<li>Chrome浏览器，不多说。</li>
+<li>支持翻墙的网络，Chrome插件开发需要经常到Chrome develop网站上查询API</li>
+</ol>
+<h2 id="Chrome开发概览"><a href="#Chrome开发概览" class="headerlink" title="Chrome开发概览"></a>Chrome开发概览</h2><p>Chrome插件是用Html，CSS，和Javascript语言来开发的，并且可以使用类似于Bootstrap或者JQuery，AngluarJS等前端框架所以基本上写起插件来跟写前端程序比较类似。在Chrome插件发中最重要的就是manifest.json文件，这个文件中描述了Chrome插件的图标，所需要的权限，以及插件的各种配置。</p>
+<h2 id="第一步：编写mainifest-json文件"><a href="#第一步：编写mainifest-json文件" class="headerlink" title="第一步：编写mainifest.json文件"></a>第一步：编写mainifest.json文件</h2><p>manifest.json是的一个json格式的文件，该文件有很多配置选项，在文件中配置chrome插件的权限，选项页等配置。</p>
+<p>新建一个文件夹，在其中新建一个manifest.json文件然后将如下内容写入文件中<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  &quot;name&quot;: &quot;Chrome Extension&quot;,                     //插件名称</span><br><span class="line">  &quot;version&quot;: &quot;1.1&quot;,                               //版本信息</span><br><span class="line">  &quot;description&quot;: &quot;My First Chrome Extension&quot;,     //描述</span><br><span class="line">  &quot;manifest_version&quot;: 2                           //配置文件版本</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>创建然后在chrome浏览器打开chrome://extensions扩展管理页面，点击<em>加载已解压的扩展程序</em>，<br><img src="http://ww3.sinaimg.cn/large/b3ee9d59gw1f5kkcfef1hj20kq02rt8x.jpg" alt><br>选中刚刚创建的文件夹就可以将创建的chrome插件加载到chrome中进行测试了。<br>成功加载后扩展管理页面会多出一个插件<br><img src="http://ww1.sinaimg.cn/large/b3ee9d59gw1f5kkd2nuv5j20kn0523z3.jpg" alt><br>并且在chrome的右上角会多出一个插件的小图标，这就代表我们已经成功创建了一个Chrome插件<br><img src="http://ww4.sinaimg.cn/large/b3ee9d59gw1f5kkd8oo34j202z01gglf.jpg" alt><br>仅仅使用几行代码就创建了一个chrome插件是不是很简单，但是这个小插件也没有任何的功能，在接下来的文章中，我会详细的描述一个简单的RSS订阅插件的开发过程，并解释开发过程使用到的各种API以及manifest文件的更多配置来帮助大家学习chrome插件的开发。</p>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+
+    <footer class="post-footer">
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/11/20/Unity-Problem1/" rel="next" title="那些Unity中的坑（一）">
+                <i class="fa fa-chevron-left"></i> 那些Unity中的坑（一）
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/01/05/hexo-plugin-dev/" rel="prev" title="hexo-maintance插件开发">
+                hexo-maintance插件开发 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image" src="/images/avatar.gif" alt="BoenYang">
+          <p class="site-author-name" itemprop="name">BoenYang</p>
+          <p class="site-description motion-element" itemprop="description">I am a game programmer</p>
+        </div>
+        <nav class="site-state motion-element">
+        
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">5</span>
+                <span class="site-state-item-name">posts</span>
+              </a>
+            </div>
+          
+
+          
+
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/BoenYang" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#环境搭建"><span class="nav-number">1.</span> <span class="nav-text">环境搭建</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Chrome开发概览"><span class="nav-number">2.</span> <span class="nav-text">Chrome开发概览</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#第一步：编写mainifest-json文件"><span class="nav-number">3.</span> <span class="nav-text">第一步：编写mainifest.json文件</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">BoenYang</span>
+</div>
+
+
+<div class="powered-by">
+  Powered by <a class="theme-link" href="https://hexo.io">Hexo</a>
+</div>
+
+<div class="theme-info">
+  Theme -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Muse
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+
+</body>
+</html>

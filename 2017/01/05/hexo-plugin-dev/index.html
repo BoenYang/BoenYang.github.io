@@ -1,0 +1,645 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="en">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css">
+
+
+  <meta name="keywords" content="Hexo, NexT">
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.0">
+
+
+
+
+
+
+<meta name="description" content="前言2016年是比较忙碌的一年，在这过去一年里面并没有什么时间来写博客，所以2017年的一个小目标就是多写一些博客，把自己碰到的一些问题和想法记录下来。 由于我经常需要换电脑来工作，所以每次用hexo写博客都笔记麻烦，每次换电脑都需要重新配置，同步内容，主题什么的也都丢了之前写的一篇hexo的备份工具是基于已有的工具修改了，觉得源代码没有办法保存，因此去看了些hexo的API，开发了一个插件。 关">
+<meta property="og:type" content="article">
+<meta property="og:title" content="hexo-maintance插件开发">
+<meta property="og:url" content="http://yoursite.com/2017/01/05/hexo-plugin-dev/index.html">
+<meta property="og:site_name" content="BoenYang">
+<meta property="og:description" content="前言2016年是比较忙碌的一年，在这过去一年里面并没有什么时间来写博客，所以2017年的一个小目标就是多写一些博客，把自己碰到的一些问题和想法记录下来。 由于我经常需要换电脑来工作，所以每次用hexo写博客都笔记麻烦，每次换电脑都需要重新配置，同步内容，主题什么的也都丢了之前写的一篇hexo的备份工具是基于已有的工具修改了，觉得源代码没有办法保存，因此去看了些hexo的API，开发了一个插件。 关">
+<meta property="og:locale" content="en">
+<meta property="og:updated_time" content="2019-09-23T06:47:53.734Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="hexo-maintance插件开发">
+<meta name="twitter:description" content="前言2016年是比较忙碌的一年，在这过去一年里面并没有什么时间来写博客，所以2017年的一个小目标就是多写一些博客，把自己碰到的一些问题和想法记录下来。 由于我经常需要换电脑来工作，所以每次用hexo写博客都笔记麻烦，每次换电脑都需要重新配置，同步内容，主题什么的也都丢了之前写的一篇hexo的备份工具是基于已有的工具修改了，觉得源代码没有办法保存，因此去看了些hexo的API，开发了一个插件。 关">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2017/01/05/hexo-plugin-dev/">
+
+
+
+
+
+  <title> hexo-maintance插件开发 | BoenYang </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="en">
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">BoenYang</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+    
+      <p class="site-subtitle">BoenYang's Blog</p>
+    
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            Archives
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            Tags
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+  <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/01/05/hexo-plugin-dev/">
+
+  <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <meta itemprop="name" content="BoenYang">
+    <meta itemprop="description" content>
+    <meta itemprop="image" content="/images/avatar.gif">
+  </span>
+
+  <span style="display:none" itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+    <meta itemprop="name" content="BoenYang">
+    <span style="display:none" itemprop="logo" itemscope itemtype="http://schema.org/ImageObject">
+      <img style="display:none;" itemprop="url image" alt="BoenYang" src>
+    </span>
+  </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                hexo-maintance插件开发
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-01-05T21:05:50+00:00">
+                2017-01-05
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+
+          
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>2016年是比较忙碌的一年，在这过去一年里面并没有什么时间来写博客，所以2017年的一个小目标就是多写一些博客，把自己碰到的一些问题和想法记录下来。</p>
+<p>由于我经常需要换电脑来工作，所以每次用hexo写博客都笔记麻烦，每次换电脑都需要重新配置，同步内容，主题什么的也都丢了之前写的一篇hexo的备份工具是基于已有的工具修改了，觉得源代码没有办法保存，因此去看了些hexo的API，开发了一个插件。</p>
+<h1 id="关于hexo-maintance"><a href="#关于hexo-maintance" class="headerlink" title="关于hexo-maintance"></a>关于hexo-maintance</h1><h2 id="特性"><a href="#特性" class="headerlink" title="特性"></a>特性</h2><blockquote>
+<ol>
+<li>自动在发布之后备份博客源文件</li>
+<li>自动备份包括博客配置文件，主题</li>
+<li>命令行一键恢复博客，自动恢复已安装插件</li>
+</ol>
+</blockquote>
+<h2 id="使用"><a href="#使用" class="headerlink" title="使用"></a>使用</h2><h3 id="自动备份博客"><a href="#自动备份博客" class="headerlink" title="自动备份博客"></a>自动备份博客</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">//在博客目录下</span><br><span class="line">npm install hexo-maintance --save</span><br><span class="line"></span><br><span class="line">//在_config.yml中添加备份配置</span><br><span class="line">backup:</span><br><span class="line">  repo: repo_url</span><br><span class="line">  branch: repo_branch</span><br><span class="line"></span><br><span class="line">然后调用</span><br><span class="line">hexo d</span><br><span class="line">在发布成功之后就会自动将博客备份至指定仓库和制定分支</span><br></pre></td></tr></table></figure>
+<h3 id="恢复博客"><a href="#恢复博客" class="headerlink" title="恢复博客"></a>恢复博客</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">hexo init MyBlog</span><br><span class="line">cd MyBlog</span><br><span class="line">npm install hexo-maintance --save</span><br><span class="line"></span><br><span class="line">//在_config.yml中添加备份配置</span><br><span class="line">backup:</span><br><span class="line">  repo: repo_url</span><br><span class="line">  branch: repo_branch</span><br><span class="line"></span><br><span class="line">hexo restore</span><br></pre></td></tr></table></figure>
+<p><strong>注：无论是备份或者恢复博客都需要github的仓库写入权限</strong><br><a href="http://www.jianshu.com/p/ddd3122cb351" target="_blank" rel="noopener">Github SSH验证配置</a></p>
+<h1 id="实现原理"><a href="#实现原理" class="headerlink" title="实现原理"></a>实现原理</h1><p>自动备份其实是利用hexo的<a href="https://hexo.io/api/events.html" target="_blank" rel="noopener">[Event API]</a>中的deployAfter来实现。在deployAfter之后自动在博客根目录下初始化git仓库，将博客推送到配置的git仓库中。</p>
+<p>命令行一键恢复其实是利用hexo的<a href="https://hexo.io/api/console.html" target="_blank" rel="noopener">[Console Extension]</a>开增加了一个命令，调用命令后将配置的git仓库中的博客源文件拉取到本地替换掉之前的即可。</p>
+<p>在完成之后并将插件打包发布到了<a href="https://www.npmjs.com/package/hexo-maintance" target="_blank" rel="noopener">npm</a>上，利用npm install hexo-maintance –save就可以安装了，使用还是蛮方便的.</p>
+<h1 id="TODO"><a href="#TODO" class="headerlink" title="TODO"></a>TODO</h1><ol>
+<li>hexo一键升级工具</li>
+<li>博客同步</li>
+<li>svn等其他仓库工具支持</li>
+</ol>
+<p>插件并不完善，有很多的Bug,欢迎大家使用，发现问题<a href="https://github.com/BoenYang/hexo-maintance/issue" target="_blank" rel="noopener">[点这里]</a>！<br>插件地址：<a href="https://github.com/BoenYang/hexo-maintance" target="_blank" rel="noopener">hexo-maintance</a></p>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+
+    <footer class="post-footer">
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/12/20/chrome-extension-dev-1/" rel="next" title="Chrome插件开发-开发环境搭建">
+                <i class="fa fa-chevron-left"></i> Chrome插件开发-开发环境搭建
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/01/06/Unity-sliced-progressbar/" rel="prev" title="Unity九宫格切图图片制作进度条">
+                Unity九宫格切图图片制作进度条 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image" src="/images/avatar.gif" alt="BoenYang">
+          <p class="site-author-name" itemprop="name">BoenYang</p>
+          <p class="site-description motion-element" itemprop="description">I am a game programmer</p>
+        </div>
+        <nav class="site-state motion-element">
+        
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">5</span>
+                <span class="site-state-item-name">posts</span>
+              </a>
+            </div>
+          
+
+          
+
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/BoenYang" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#前言"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#关于hexo-maintance"><span class="nav-number">2.</span> <span class="nav-text">关于hexo-maintance</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#特性"><span class="nav-number">2.1.</span> <span class="nav-text">特性</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#使用"><span class="nav-number">2.2.</span> <span class="nav-text">使用</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#自动备份博客"><span class="nav-number">2.2.1.</span> <span class="nav-text">自动备份博客</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#恢复博客"><span class="nav-number">2.2.2.</span> <span class="nav-text">恢复博客</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#实现原理"><span class="nav-number">3.</span> <span class="nav-text">实现原理</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#TODO"><span class="nav-number">4.</span> <span class="nav-text">TODO</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">BoenYang</span>
+</div>
+
+
+<div class="powered-by">
+  Powered by <a class="theme-link" href="https://hexo.io">Hexo</a>
+</div>
+
+<div class="theme-info">
+  Theme -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Muse
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+
+</body>
+</html>
