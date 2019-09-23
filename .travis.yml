@@ -1,0 +1,15 @@
+os: linux
+
+language: node_js
+
+cache:
+  npm: true
+
+before_install:
+  - npm install hexo -g
+
+install:
+  - npm install
+
+script:
+  - hexo deploy -g
